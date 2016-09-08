@@ -465,19 +465,21 @@ function BasePage(url, title, dir) {
 	 */
 	this.waitForElements = function(selector, amount, name) {
 		casper.waitFor(function() {
-			return this.evaluate(function(el, num) {
-		        return document.querySelectorAll(el).length >= num;
-		    }, selector, amount);
-		},
-		function success() {
-			casper.test.pass(found('At least ' + amount + ' of ' + name));
-			self.screenshot(outputDir, name);
-    	},
-    	function fail() {
-    		casper.test.fail(found('At least ' + amount + ' ' + name));
-    		self.screenshot(outputDirFail, outputFile);
-    		casper.test.done();
-		});
+				return this.evaluate(function(el, num) {
+			        return document.querySelectorAll(el).length >= num;
+			    }, selector, amount);
+			},
+			function success() {
+				casper.test.pass(found('At least ' + amount + ' of ' + name));
+				self.screenshot(outputDir, name);
+	    	},
+	    	function fail() {
+	    		casper.test.fail(found('At least ' + amount + ' ' + name));
+	    		self.screenshot(outputDirFail, outputFile);
+	    		casper.test.done();
+			},
+	    	this.defaultTimeout
+    	);
 	};
 
 	/**
