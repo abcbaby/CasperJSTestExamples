@@ -4,8 +4,6 @@ This project contains CasperJS tests.
 
 Currently set to run on Windows.
 
-********************* GET STARTED 11/20/2014 **********************
-
 1. Run
 	- Right click on build.xml
 	- Click Run As -> Ant Build...
