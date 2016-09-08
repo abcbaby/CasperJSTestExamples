@@ -1,0 +1,49 @@
+<project default="mainTest" name="CasperJSTestExamples" basedir=".">
+
+	<property file="build.properties" />
+	<property name="phantomjs.exe" location="${basedir}/${phantomjs.exe.file}" />
+	<property name="casperjs.exe" location="${basedir}/${casperjs.exe.file}" />
+
+	<target name="mainTest">
+		<echo message="PhantomJS: ${phantomjs.exe}" />
+		<echo message="CasperJS: ${casperjs.exe}" />
+
+		<antcall target="timestamp">
+			<param name="message" value="Casper Automated Testing Started at:" />
+		</antcall>
+
+		<antcall target="casperjs.test"/>
+
+		<antcall target="timestamp">
+			<param name="message" value="Casper Automated Testing Ended at:" />
+		</antcall>
+	</target>
+
+	<target name="casperjs.test">
+		<tstamp>
+			<format property="currentTimeFileFormat" pattern="yyyyMMdd_hh_mm_ss" />
+		</tstamp>
+		<exec executable="${casperjs.exe}" failonerror="true">
+			<arg line="test" />
+			<arg line="${test.input.dir}/" />
+			<arg line="--log-level=${casperjs.options.logLevel}" />
+			<arg line="--verbose=true" />
+			<arg line="--url=${starting.url}" />
+			<arg line="--ssl-protocol=any" />
+			<arg line="--ignore-ssl-errors=true" />
+			<arg line="--xunit=${test.output.dir}/${test.output.xunit.file}.${currentTimeFileFormat}.xml" />
+			<arg line="--includes=${test.lib.dir}/common.js,${lodash.api.file},${moment.api.file}" />
+			<arg line="--timeoutInSec=30" />
+			<env key="PHANTOMJS_EXECUTABLE" value="${phantomjs.exe}" />
+		</exec>
+		<echo message="Test run completed." />
+	</target>
+
+	<target name="timestamp">
+		<tstamp>
+			<format property="current.time" pattern="MM/dd/yyyy hh:mm:ss aa" />
+		</tstamp>
+		<echo message="${message} ${current.time}" />
+	</target>
+
+</project>
