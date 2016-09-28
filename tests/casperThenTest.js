@@ -9,7 +9,9 @@
  * 5 -> 6
  * 7 -> 7
  * 6 -> 8
- * 9 -> 9
+ * 9 -> 10
+ * 10 -> 11
+ * 11 -> 12
  */
 casper.test.begin('Casper Then Test', 0, function(test) {
 
@@ -34,7 +36,15 @@ casper.test.begin('Casper Then Test', 0, function(test) {
 	});
 
 	casper.then(function() {
-	    this.echo("9 -> 9");
+		casper.wait(1000, function() {
+			// Waited 1 second.
+		    this.echo("10 -> 11");
+		});
+	    this.echo("9 -> 10");
+		casper.wait(1000, function() {
+			// Waited 1 second.
+		    this.echo("11 -> 12");
+		});
 	});
 
 	casper.run();
